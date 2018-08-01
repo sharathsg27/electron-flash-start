@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Thanos
+    </title>
+</head>
+<body>
+    <h1>Shopping List</h1>
+    <ul>
+
+    </ul>
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        const ul = document.querySelector('ul');
+
+        //Add an Item
+        ipcRenderer.on('item:add', (e, item)=> {
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(item);
+            li.appendChild(itemText);
+            ul.appendChild(li);
+        });
+
+        //Clear all Items
+        ipcRenderer.on('item:clear', (e)=> {
+            ul.innerHTML = '';
+        });
+
+        //Clear an Item
+        ul.addEventListener('dblclick', removeItem);
+
+        function removeItem(e) {
+            e.target.remove();
+        }
+
+    </script>
+</body>
+</html>
